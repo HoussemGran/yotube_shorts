@@ -26,36 +26,8 @@ class ShortsFile{
 
 }
 
-function readData(filename){
-    let map = new Map();
-    let shortfile = new ShortsFile(); 
-    let arr = [];  
-    fs.readFile(filename,(err,data)=>{
-
-        let line = data.toString().split("\n");
-          
-
-        for(let i = 0 ; i < line.length ; i++){
-            const currentLine = line[i];
-            if(currentLine.includes("youtube")){
-                const url = currentLine.split(" ")[0];
-                const title = currentLine.substring(currentLine.indexOf(" "),currentLine.length);
-                shortfile.url = url.replace("shorts","embed")
-                shortfile.title = title;
-                arr.push(shortfile);
-            }
-        
-        
-        }
-        //console.log(arr);
-        return arr;
-
-    })
-}
 
 app.get("/",(req,res)=>{
-    let map = new Map();
-    
       
     fs.readFile("peterson.txt",(err,data)=>{
         let arr = [];
@@ -73,9 +45,7 @@ app.get("/",(req,res)=>{
                 shortfile = new ShortsFile();
             }
         } 
-        //res.send(arr);
         res.render("shorts",{arr:arr.slice(0,2)});
-
     })
 })
 
