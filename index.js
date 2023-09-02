@@ -3,7 +3,6 @@ const { log } = require("console");
 const express = require("express");
 const app = express();
 const fs = require("fs");
-require("./server");
 const bodyParser = require("body-parser");
 
 
@@ -62,7 +61,6 @@ app.get("/shorts",(req,res)=>{
                 return short.url.includes(filter);
             })    
         }
-        console.log(all);
         res.render("shorts",{arr:arr.slice(0,limit),all:all});
     })
 })
