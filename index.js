@@ -27,7 +27,18 @@ class ShortsFile{
 }
 
 
-app.get("/",(req,res)=>{
+app.get("/shorts",(req,res)=>{
+
+    let limit = 5;
+    let filter = "";
+    
+    if(req.query.limit != null){
+        limit = req.query.limit;
+    }
+
+    if(req.query.filter != null){
+        filter = req.query.filter;
+    }
       
     fs.readFile("peterson.txt",(err,data)=>{
         let arr = [];
@@ -45,7 +56,14 @@ app.get("/",(req,res)=>{
                 shortfile = new ShortsFile();
             }
         } 
-        res.render("shorts",{arr:arr.slice(0,2)});
+        let all = arr;
+        if(filter != ""){
+            arr = arr.filter((short)=>{
+                return short.url.includes(filter);
+            })    
+        }
+        console.log(all);
+        res.render("shorts",{arr:arr.slice(0,limit),all:all});
     })
 })
 

@@ -10,10 +10,21 @@
     
     <div class="container" style="margin-top: 10px;">
         <div class="row" style="width: 50%;">
+
           <div class="col">
-            <select onchange="filter()" class="form-select" aria-label="Default select example">
+            <select name="limit" onchange="limit(event)" class="form-select" id="limit">
+              <option>Choose a limit</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="500">ALL</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <select onchange="filter(event)" class="form-select" aria-label="Default select example">
                 <option selected>Filter By Title</option>
-                <% arr.forEach(function(item){ %>
+                <% all.forEach(function(item){ %>
                 <option value="<%= item.url %>"><%= item.title %></option>
                 <% }); %>
               </select>
@@ -45,8 +56,14 @@
 
       <script>
 
-        function filter(){
-          alert("it work")
+        function filter(e){
+          const filter = e.target.value;
+          window.location.href = `/shorts?filter=${filter}`;
+        }
+
+        function limit(e){
+          const limit = e.target.value;
+          window.location.href = `/shorts?limit=${limit}`;
         }
 
       </script>
